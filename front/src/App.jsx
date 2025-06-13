@@ -36,7 +36,9 @@ const App = () => {
       },
       {
        path: "/signup",
-        element: <Signup />
+        element: <RestrictedRoute>
+          <Signup />
+        </RestrictedRoute>
       },
       {
         path: "/login",

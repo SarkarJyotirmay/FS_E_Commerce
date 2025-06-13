@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../store/slices/userSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const {userDetails} = useSelector((state)=>state.user)
+
+  useEffect(()=>{console.log(userDetails);
+  },[userDetails])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +25,7 @@ const Login = () => {
     try {
       const response = await axiosInstance.post("user/login", formData);
       console.log(response.data);
+      dispatch(setUser(response.data.user)) // setting state in user slice
       navigate("/");
     } catch (error) {
       console.error("Error from login submission", error);
