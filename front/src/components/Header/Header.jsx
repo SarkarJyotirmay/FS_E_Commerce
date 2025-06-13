@@ -1,45 +1,101 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./Header.module.css";
+import { Menu, X } from "lucide-react";
 
-const Header = ({ cartCount }) => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
+    setMenuOpen(!menuOpen);
   };
-
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        {/* Logo */}
-        <Link to="/" className={styles.logo}>E-Shop</Link>
+    <>
+      {/* Navbar */}
+      <header className="min-h-18 flex items-center justify-between px-6 py-4 bg-[#229BD3] shadow-md relative">
+        <h1 className="text-2xl font-bold text-white">ShopEase</h1>
 
-        {/* Toggle Button */}
-        <button onClick={toggleMenu} className={styles["menu-toggle"]}>
-          {menuOpen ? "Close" : "Menu"}
+        <nav className="hidden md:flex space-x-6">
+          <Link
+            to="/"
+            className="text-white hover:underline transition-all duration-300"
+          >
+            Home
+          </Link>
+          <Link
+            to="/products"
+            className="text-white hover:underline transition-all duration-300"
+          >
+            Products
+          </Link>
+          <Link
+            to="/about"
+            className="text-white hover:underline transition-all duration-300"
+          >
+            About
+          </Link>
+          <Link
+            to="/contact"
+            className="text-white hover:underline transition-all duration-300"
+          >
+            Contact
+          </Link>
+          <Link
+            to="/signup"
+            className="text-white hover:underline transition-all duration-300"
+          >
+            Signup
+          </Link>
+        </nav>
+
+        {/* Hamburger Menu */}
+        <button
+          onClick={toggleMenu}
+          className="md:hidden text-white focus:outline-none z-20"
+        >
+          {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
-        {/* Nav Links */}
-        <nav
-          className={`${styles.nav} ${menuOpen ? styles.mobile : ""}`}
+        {/* Mobile Menu Overlay */}
+        <div
+          className={`min-h-screen absolute top-0 left-0 w-full h-full bg-[#4e46e5e0] backdrop-blur-sm text-white flex flex-col items-center justify-center gap-8 transform transition-transform duration-500 ease-in-out z-10 ${
+            menuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
-          <ul>
-            <li>
-              <Link to="/" onClick={toggleMenu}>Home</Link>
-            </li>
-            <li>
-              <Link to="/shop" onClick={toggleMenu}>Shop</Link>
-            </li>
-            <li>
-              <Link to="/cart" onClick={toggleMenu}>
-                Cart {cartCount > 0 && `(${cartCount})`}
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+          <Link to="/" onClick={toggleMenu} className="text-2xl font-medium">
+            Home
+          </Link>
+          <Link
+            to="/products"
+            onClick={toggleMenu}
+            className="text-2xl font-medium"
+          >
+            Products
+          </Link>
+          <Link
+            to="/about"
+            onClick={toggleMenu}
+            className="text-2xl font-medium"
+          >
+            About
+          </Link>
+          <Link
+            to="/contact"
+            onClick={toggleMenu}
+            className="text-2xl font-medium"
+          >
+            Contact
+          </Link>
+          <Link
+            to="/signup"
+            onClick={toggleMenu}
+            className="text-2xl font-medium"
+          >
+            Signup
+          </Link>
+        </div>
+      </header>
+    </>
   );
 };
 

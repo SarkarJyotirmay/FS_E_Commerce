@@ -1,5 +1,8 @@
 const express = require("express");
-const registrationValidation = require("../middlewares/userRegistrationDetailsValidation.middleware.js")
+
+// middlewares
+const registrationValidation = require("../middlewares/registrationFormValidation.middleware.js")
+const loginFormValidation = require("../middlewares/loginFormValidation.middleware.js")
 
 const {
     register,
@@ -12,7 +15,7 @@ const router = express.Router();
 
 router.post("/register",registrationValidation, register);
 
-router.post("/login", login);
+router.post("/login", loginFormValidation, login);
 
 router.post("/forgot-password", forgotPassword);
 
