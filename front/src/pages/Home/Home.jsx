@@ -23,7 +23,10 @@ const Home = () => {
         </div>
 
         {/* Overlay effect */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#229BD3]/30 via-white/5 to-[#E11D48]/30 pointer-events-none"></div>
+        <div
+          className="absolute inset-0 bg-gradient-to-tr from-[#229BD3]/30 via-white/5
+         to-[#E11D48]/30 pointer-events-none"
+        ></div>
       </section>
     </div>
   );

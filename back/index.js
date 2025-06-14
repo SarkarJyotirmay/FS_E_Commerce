@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors")
 
 const userRoutes = require("./routes/user.route.js");
+const ProductRouter = require("./routes/products.route.js");
+const tokenValidation = require("./middlewares/tokenValidation.middleware.js")
 
 const app = express();
 
@@ -21,6 +23,8 @@ mongoose
 
 // Modular routes
 app.use("/api/v1/user", userRoutes);
+// app.use(tokenValidation) // middleware to validate token
+app.use("/api/v1/products",tokenValidation,ProductRouter)
 
 // app.use("/api/v1/products", productRoutes)
 

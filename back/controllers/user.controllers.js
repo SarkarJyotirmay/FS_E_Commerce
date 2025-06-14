@@ -1,5 +1,6 @@
 const UserModel = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken")
 
 const register = async (req, res) => {
   // Todo:  Write validation for req body
@@ -27,9 +28,9 @@ const login = async (req, res) => {
   // cjheck if user is present in db
   // check if user password matches
   try {
-    const user = await UserModel.findOne({email: req.body.email});
+    const user = await UserModel.findOne({ email: req.body.email });
     const plainTextpass = req.body.password;
-
+    // if user not found
     if (!user) {
       return res.status(500).json({
         success: false,
@@ -37,6 +38,7 @@ const login = async (req, res) => {
         from: "login API",
       });
     }
+    // if password not matched
     let passMatched = await bcrypt.compare(plainTextpass, user.password);
     if (!passMatched) {
       return res.status(401).json({
@@ -45,10 +47,23 @@ const login = async (req, res) => {
         from: "login API",
       });
     }
+    // if everything ok
+    const tokenData = {
+      _id: user._id,
+      email: user.email,
+    }
+    const token = jwt.sign(
+     tokenData
+      ,
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
     res.json({
       success: true,
       message: "Login successful",
       user: user, // coming from middleware
+      token: token,
     });
   } catch (error) {
     res.status(500).json({
