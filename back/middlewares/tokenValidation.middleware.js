@@ -10,6 +10,8 @@ const tokenValidation = async (req, res, next) => {
 
   const authToken = req.headers.authorization.split(" ")[1];
   if (!authToken) {
+    console.log("Token not recived");
+    
     return res.status(401).json({
       success: false,
       message: "Token is not found",
@@ -24,6 +26,8 @@ const tokenValidation = async (req, res, next) => {
     
   } catch (err) {
     // err
+    console.log(`Error in token validation: ${err}`);
+    
     res.status(401).json({
         success: false,
         message: "Token is not verified",

@@ -28,10 +28,14 @@ const login = async (req, res) => {
   // cjheck if user is present in db
   // check if user password matches
   try {
+    console.log(`Login api hit`);
+    
     const user = await UserModel.findOne({ email: req.body.email });
     const plainTextpass = req.body.password;
     // if user not found
     if (!user) {
+      console.log(`user not found `);
+      
       return res.status(500).json({
         success: false,
         message: "User not found in DB",
@@ -41,6 +45,8 @@ const login = async (req, res) => {
     // if password not matched
     let passMatched = await bcrypt.compare(plainTextpass, user.password);
     if (!passMatched) {
+      console.log(`pass not matched`);
+      
       return res.status(401).json({
         success: false,
         message: "Wrong password",
@@ -56,7 +62,7 @@ const login = async (req, res) => {
      tokenData
       ,
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "1d" } 
     );
 
     res.json({
