@@ -10,8 +10,8 @@ const Login = () => {
   const dispatch = useDispatch()
   const {userDetails} = useSelector((state)=>state.user)
 
-  useEffect(()=>{console.log(userDetails);
-  },[userDetails])
+  // useEffect(()=>{console.log(userDetails);
+  // },[userDetails])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +26,7 @@ const Login = () => {
       const response = await axiosInstance.post("user/login", formData);
       console.log(response.data);
       dispatch(setUser(response.data.user)) // setting state in user slice
+      localStorage.setItem("token", JSON.stringify(response.data.token))
       navigate("/");
     } catch (error) {
       console.error("Error from login submission", error);

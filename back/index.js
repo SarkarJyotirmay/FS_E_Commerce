@@ -5,7 +5,8 @@ const cors = require("cors")
 
 const userRoutes = require("./routes/user.route.js");
 const ProductRouter = require("./routes/products.route.js");
-const tokenValidation = require("./middlewares/tokenValidation.middleware.js")
+const tokenValidation = require("./middlewares/tokenValidation.middleware.js");
+const AuthRoutetr = require("./routes/auth.route.js");
 
 const app = express();
 
@@ -24,7 +25,8 @@ mongoose
 // Modular routes
 app.use("/api/v1/user", userRoutes);
 // app.use(tokenValidation) // middleware to validate token
-app.use("/api/v1/products",ProductRouter)
+app.use("/api/v1/auth",tokenValidation ,AuthRoutetr)
+app.use("/api/v1/products",tokenValidation,ProductRouter)
 
 
 const portNo = process.env.PORT_NO || 8080;

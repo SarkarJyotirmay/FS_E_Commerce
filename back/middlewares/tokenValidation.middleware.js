@@ -1,7 +1,7 @@
-const dotenv = require("dotenv")
-const jwt = require("jsonwebtoken")
+const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
 
-dotenv.config()
+dotenv.config();
 
 const tokenValidation = async (req, res, next) => {
   // check if token present
@@ -11,7 +11,7 @@ const tokenValidation = async (req, res, next) => {
   const authToken = req.headers.authorization.split(" ")[1];
   if (!authToken) {
     console.log("Token not recived");
-    
+
     return res.status(401).json({
       success: false,
       message: "Token is not found",
@@ -21,21 +21,19 @@ const tokenValidation = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(authToken, process.env.JWT_SECRET_KEY);
-    // console.log(decoded);
-     next();
-    
+    console.log(decoded);
+    req.userData = decoded; // for auth api to bypass login afetr page refresh with token data
+    next();
   } catch (err) {
     // err
     console.log(`Error in token validation: ${err}`);
-    
-    res.status(401).json({
-        success: false,
-        message: "Token is not verified",
-        from: "token validation middleare"
-    })
-  }
 
- 
+    res.status(401).json({
+      success: false,
+      message: "Token is not verified",
+      from: "token validation middleare",
+    });
+  }
 };
 
 module.exports = tokenValidation;

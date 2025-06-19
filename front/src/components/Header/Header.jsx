@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import LoggedInUser from "./LoggedInUser";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { userDetails } = useSelector((state) => state.user);
+  // useEffect(() => {
+  //   console.log(userDetails);
+  // }, [userDetails]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -40,12 +47,16 @@ const Header = () => {
           >
             Contact
           </Link>
-          <Link
-            to="/signup"
-            className="text-white hover:underline transition-all duration-300"
-          >
-            Signup
-          </Link>
+          {userDetails ? (
+            <LoggedInUser />
+          ) : (
+            <Link
+              to="/signup"
+              className="text-white hover:underline transition-all duration-300"
+            >
+              Signup
+            </Link>
+          )}
         </nav>
 
         {/* Hamburger Menu */}
@@ -86,13 +97,17 @@ const Header = () => {
           >
             Contact
           </Link>
-          <Link
-            to="/signup"
-            onClick={toggleMenu}
-            className="text-2xl font-medium"
-          >
-            Signup
-          </Link>
+          {userDetails ? (
+            <LoggedInUser />
+          ) : (
+            <Link
+              to="/signup"
+              onClick={toggleMenu}
+              className="text-2xl font-medium"
+            >
+              Signup
+            </Link>
+          )}
         </div>
       </header>
     </>

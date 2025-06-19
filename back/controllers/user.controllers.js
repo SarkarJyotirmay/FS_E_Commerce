@@ -28,13 +28,12 @@ const login = async (req, res) => {
   // cjheck if user is present in db
   // check if user password matches
   try {
-    console.log(`Login api hit`);
-    
+    // console.log(`Login api hit`);
     const user = await UserModel.findOne({ email: req.body.email });
     const plainTextpass = req.body.password;
     // if user not found
     if (!user) {
-      console.log(`user not found `);
+      console.log(`user not found`);
       
       return res.status(500).json({
         success: false,
@@ -56,6 +55,7 @@ const login = async (req, res) => {
     // if everything ok
     const tokenData = {
       _id: user._id,
+      firstName: user.firstName,
       email: user.email,
     }
     const token = jwt.sign(
@@ -68,7 +68,7 @@ const login = async (req, res) => {
     res.json({
       success: true,
       message: "Login successful",
-      user: user, // coming from middleware
+      user: tokenData, // coming from middleware
       token: token,
     });
   } catch (error) {
