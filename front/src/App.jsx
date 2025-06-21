@@ -14,6 +14,7 @@ import AddProduct from "./pages/AddProduct/AddProduct";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "./utils/axiosInstance";
 import { setUser } from "./store/slices/userSlice";
+import Cart from "./pages/Cart/Cart";
 
 const App = () => {
   // for state less login
@@ -40,6 +41,10 @@ const App = () => {
         {
           path: "/products",
           element: <Products />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />
         },
         {
           path: "/about",

@@ -1,4 +1,5 @@
 const ProductModel = require("../models/products.model.js");
+const UserModel = require("../models/user.model.js");
 
 // ! create a product
 const createProduct = async (req, res) => {
@@ -107,10 +108,22 @@ const getProduct = async (req, res) => {
   }
 };
 
+// delte a product => payload => {_id}
+const removeProduct = async (req, res) => {
+  const { _id } = req.body;
+  const deletedProduct = await ProductModel.findByIdAndDelete(_id);
+  res.json({
+    success: true,
+    message: `Product deleted with id: ${_id}`,
+    deletedProduct
+  });
+};
+
 const productControllers = {
   listProduct,
   createProduct,
   getProduct,
+  removeProduct,
 };
 
 module.exports = productControllers;

@@ -36,6 +36,12 @@ const Header = () => {
             Products
           </Link>
           <Link
+            to="/cart"
+            className="text-white hover:underline transition-all duration-300"
+          >
+            Cart
+          </Link>
+          <Link
             to="/about"
             className="text-white hover:underline transition-all duration-300"
           >
