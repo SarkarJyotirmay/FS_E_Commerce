@@ -22,6 +22,11 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        required: true,
+        default: "CUSTOMER"
+    },
     address: {
         addressLine1: {
             type: String,

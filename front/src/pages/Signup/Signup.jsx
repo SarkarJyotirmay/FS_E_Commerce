@@ -10,6 +10,7 @@ const Signup = () => {
     email: "",
     mobNo: "",
     password: "",
+    role: "CUSTOMER",
     address: {
       addressLine1: "",
       addressLine2: "",
@@ -44,18 +45,20 @@ const Signup = () => {
   };
 
   // Submit Handler
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
     // send to backend here register api call
     try {
-     const response =  await axios.post(`${import.meta.env.VITE_API_URL}user/register`, formData) // as insrtance not working
-     console.log(response.data);
-     navigate("/login")
-     
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}user/register`,
+        formData
+      ); // as instance not working //ToDo: Use redux store to handle async task
+      console.log(response.data);
+      navigate("/login");
     } catch (error) {
-      console.error("Registration failuire")
+      console.error("Registration failuire");
     }
   };
 

@@ -6,7 +6,7 @@ const register = async (req, res) => {
   // Todo:  Write validation for req body
   try {
     // const hashPass = await bcrypt.hash(req.body.password, 10) => to avoid redundancy moved to user model
-    await UserModel.create(req.body);
+    await UserModel.create({...req.body, user:"CUSTOMER"});
     res.json({
       succes: true,
       message: "Registration successfull",
