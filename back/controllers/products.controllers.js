@@ -115,7 +115,7 @@ const removeProduct = async (req, res) => {
   res.json({
     success: true,
     message: `Product deleted with id: ${_id}`,
-    deletedProduct
+    deletedProduct,
   });
 };
 

@@ -8,6 +8,7 @@ const ProductRouter = require("./routes/products.route.js");
 const tokenValidation = require("./middlewares/tokenValidation.middleware.js");
 const AuthRoutetr = require("./routes/auth.route.js");
 const CartRouter = require("./routes/cart.route.js");
+const CuponRouter = require("./routes/cupon.route.js");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/auth", tokenValidation, AuthRoutetr);
 app.use("/api/v1/products", ProductRouter);
 app.use("/api/v1/cart", tokenValidation, CartRouter);
+app.use("/api/v1/cupon/", tokenValidation, CuponRouter)
 
 const portNo = process.env.PORT_NO || 8080;
 

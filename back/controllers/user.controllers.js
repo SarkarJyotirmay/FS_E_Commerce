@@ -1,12 +1,12 @@
 const UserModel = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   // Todo:  Write validation for req body
   try {
     // const hashPass = await bcrypt.hash(req.body.password, 10) => to avoid redundancy moved to user model
-    await UserModel.create({...req.body, user:"CUSTOMER"});
+    await UserModel.create({ ...req.body, user: "CUSTOMER" });
     res.json({
       succes: true,
       message: "Registration successfull",
@@ -34,7 +34,7 @@ const login = async (req, res) => {
     // if user not found
     if (!user) {
       console.log(`user not found`);
-      
+
       return res.status(500).json({
         success: false,
         message: "User not found in DB",
@@ -45,7 +45,7 @@ const login = async (req, res) => {
     let passMatched = await bcrypt.compare(plainTextpass, user.password);
     if (!passMatched) {
       console.log(`pass not matched`);
-      
+
       return res.status(401).json({
         success: false,
         message: "Wrong password",
@@ -57,18 +57,16 @@ const login = async (req, res) => {
       _id: user._id,
       firstName: user.firstName,
       email: user.email,
-    }
-    const token = jwt.sign(
-     tokenData
-      ,
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: "1d" } 
-    );
+      role: user.role,
+    };
+    const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1d",
+    });
 
     res.json({
       success: true,
       message: "Login successful",
-      user: tokenData, // coming from middleware
+      user: tokenData, 
       token: token,
     });
   } catch (error) {
